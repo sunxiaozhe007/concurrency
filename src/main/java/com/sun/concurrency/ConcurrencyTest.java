@@ -30,14 +30,14 @@ public class ConcurrencyTest {
         ExecutorService executorService = Executors.newCachedThreadPool();
         final Semaphore semaphore = new Semaphore(threadTotal);
         final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
-        for(int i = 0; i < clientTotal; i++){
-            executorService.execute(() ->{
+        for (int i = 0; i < clientTotal; i++) {
+            executorService.execute(() -> {
                 try {
                     semaphore.acquire();
                     add();
                     semaphore.release();
-                }catch (InterruptedException e) {
-                    log.error("exception",e);
+                } catch (InterruptedException e) {
+                    log.error("exception", e);
                 }
                 countDownLatch.countDown();
 
@@ -45,10 +45,10 @@ public class ConcurrencyTest {
         }
         countDownLatch.await();
         executorService.shutdown();
-        log.info("count:{}",count);
+        log.info("count:{}", count);
     }
 
-    private static void add(){
+    private static void add() {
         count++;
     }
 }
